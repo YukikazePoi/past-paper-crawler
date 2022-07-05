@@ -1,14 +1,14 @@
-#Past Paper Downloader beta
+# Past Paper Downloader beta
 
-##介绍
+## 介绍
 
 批量下载Past Paper工具
 
 基于 papers.gceguide.com，此网站更新题库较为及时，可能需要vpn进行访问
 
-##v0.0 (beta)
+## v0.0 (beta)
 
-###使用说明
+### 使用说明
 
 选择qualification：A level / O level / IGCSE，支持多选
 
@@ -20,7 +20,7 @@
 
 <font color=red>注意不可多次download</font>，所以请一次性选择全部需要下载的paper
 
-###待更新
+### 待更新
 
 mac支持
 specimen paper支持
