@@ -11,9 +11,6 @@ import socket
 import threading
 from sys import exit
 from tkinter.filedialog import askdirectory
-sleep_download_time = 10
-timeout = 20
-socket.setdefaulttimeout(timeout)  # 这里对整个socket层设置超时时间。后续文件中如果再使用到socket，不必再设置
 user_agent = [
     "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; AcooBrowser; .NET CLR 1.1.4322; .NET CLR 2.0.50727)",
     "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; Acoo Browser; SLCC1; .NET CLR 2.0.50727; Media Center PC 5.0; .NET CLR 3.0.04506)",
@@ -99,6 +96,7 @@ class urlHierchy:
 
 class file(urlHierchy):
     def download(self,inter):  # 下载该文件
+        global rootDirection
         dir = rootDirection+'/'+'/'.join(self.dir[1:])
         mkdir(rootDirection+'/'+'/'.join(self.dir[1:-1]))
         if os.path.exists(dir):
@@ -167,7 +165,8 @@ class folder(urlHierchy):
 
 class app():
     def __init__(self, interface):
-        self.root = folder(mainurl, "/")
+        self.root = folder("https://papers.gceguide.com", "/")
+        socket.setdefaulttimeout(20)  # 这里对整个socket层设置超时时间。后续文件中如果再使用到socket，不必再设置
         self.root.findList()
         self.inter = interface
         self.root.findByCriteria(".*")
