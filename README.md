@@ -23,7 +23,11 @@
 ### 待更新
 
 mac支持
+
 specimen paper支持
+
 variant选择
+
 下载进度显示
+
 科目待选栏滚动条
