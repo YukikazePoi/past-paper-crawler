@@ -1,0 +1,33 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "g++",
+            "command": "g++",
+            "args": [
+                "-g",
+                "-fexec-charset=GBK",
+                "-finput-charset=UTF-8",
+                "${file}",
+                "-o",
+                "${fileBasenameNoExtension}.exe"
+                //"codes/test.exe"
+            ],
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        }
+    ],
+}
