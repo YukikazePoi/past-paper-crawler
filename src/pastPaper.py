@@ -532,17 +532,17 @@ class gui():
             season = detail[1][1]
             category = detail[1][2]
             paper = detail[1][3]
-            detailString = "code"+re.search("\((\d\d\d\d)\)",subject).group(0)+'  '
+            detailString = re.search("\((\d\d\d\d)\)",subject).group(0)+'  '
             detailString += str(year[0])+'-'+str(year[1])+'  '
-            detailString += 'm/' if season[0] else ' /'
-            detailString += 's/' if season[1] else ' /'
-            detailString += 'w' if season[2] else ' '
+            detailString += 'm/' if season[0] else '*/'
+            detailString += 's/' if season[1] else '*/'
+            detailString += 'w' if season[2] else '*'
             detailString += '  '
-            detailString += 'ms/' if category[0] else '  /'
-            detailString += 'qp/' if category[1] else '  /'
-            detailString += 'in/' if category[2] else '  /'
-            detailString += 'gt/' if category[3] else '  /'
-            detailString += 'er' if category[4] else '  '
+            detailString += 'ms/' if category[0] else '**/'
+            detailString += 'qp/' if category[1] else '**/'
+            detailString += 'in/' if category[2] else '**/'
+            detailString += 'gt/' if category[3] else '**/'
+            detailString += 'er' if category[4] else '**'
             detailString+='  '
             detailString+='Paper '+paper
             print(detailString)
