@@ -333,3 +333,16 @@ class gui():
     def getInfo(self):
         self.root.mainloop()
         return self.subFilFlag, self.qual, self.subjectSearched.get(), self.altFlag, self.delFlag, self.subSelected.get(), (int(self.Syear), int(self.Eyear), False), (self.mFlag.get(), self.sFlag.get(), self.wFlag.get()), (self.msFlag.get(), self.qpFlag.get(), self.inFlag.get(), self.gtFlag.get(), self.erFlag.get()), self.paper.get(), self.downloadFlag, self.qFlag
+
+    def getFlag(self):
+        self.root.mainloop()
+        return self.subFilFlag,self.altFlag,self.delFlag,self.downloadFlag,self.qFlag
+
+    def getSubFilInfo(self):
+        return self.qual,self.subjectSearched.get()
+
+    def getSubDetInfo(self):
+        year=(int(self.Syear), int(self.Eyear), False)
+        season=(self.mFlag.get(), self.sFlag.get(), self.wFlag.get())
+        category=(self.msFlag.get(), self.qpFlag.get(), self.inFlag.get(), self.gtFlag.get(), self.erFlag.get())
+        return self.subSelected.get(), year, season, category, self.paper.get()

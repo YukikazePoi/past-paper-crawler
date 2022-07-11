@@ -1,3 +1,5 @@
+#create catalog tree of url
+
 from tkinter import *
 import os
 import requests
@@ -6,7 +8,6 @@ import re
 import os
 import random
 import time
-from tkinter.filedialog import askdirectory
 
 class urlHierchy:
     def __init__(self, url, name, fa=None):
