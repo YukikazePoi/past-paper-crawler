@@ -51,6 +51,7 @@ class app():
 
     def download(self):  # Start download process
         self.downloadingFlag = True
+        self.inter.updateDownloadTitle("(Fetching Address)")
         for detail in self.downloadList.items():
             subject = detail[0]
             year = detail[1][0]
@@ -98,6 +99,9 @@ class app():
                             year.findByCriteria(paperCriteria)
                         print("find %s end" % subject)
         print("start download")
+        num=self.root.countFileNum()
+        self.inter.downloadTotal=num
+        self.inter.updateDownloadTitle("(0/%d)"%num)
         self.root.downloadAllSelected(self.inter)
         self.inter.downloadSuccess()
 

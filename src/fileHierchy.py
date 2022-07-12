@@ -77,6 +77,15 @@ class urlHierchy:
                 print("retry", self.url)
             sleep_download_time += 5
 
+    def countFileNum(self):
+        if self.__class__.__name__ == 'file':
+            return 1
+        else:
+            ans=0
+            for i in self.sons:
+                ans+=i.countFileNum()
+            return ans
+
     def downloadAllSelected(self, inter):
         print("download process enter %s as %s" %
               (self.name, self.__class__.__name__))
@@ -90,13 +99,13 @@ class urlHierchy:
 
 class file(urlHierchy):
     def download(self, inter):  # 下载该文件
+        inter.updateDownloadStatus(self.name)
         dir = inter.rootDirection+'/'+'/'.join(self.dir[1:])
         self.mkdir(inter.rootDirection+'/'+'/'.join(self.dir[1:-1]))
         if os.path.exists(dir):
             print("file exists")
             return
         pdf = open(dir, 'wb')
-        #inter.updateDownloadStatus("Downloading %s into %s" % (self.name, dir))
         print("downloading %s into %s" % (self.name, dir))
         self.getWebpage()
         pdf.write(self.webpage.content)

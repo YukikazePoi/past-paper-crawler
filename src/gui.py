@@ -5,8 +5,11 @@ import re
 import os
 from tkinter.filedialog import askdirectory
 
+
 class gui():
     def __init__(self):
+        self.downloadNum=0
+        self.downloadTotal=0
         self.root = Tk()
         self.root.protocol('WM_DELETE_WINDOW', self.destroy)
         self.root.title("Past Paper Downloader")
@@ -166,7 +169,40 @@ class gui():
             self.downloadFrame, height=92, width=194)
         self.downloadProcessFrame.grid_propagate(0)
         self.downloadProcessFrame.grid(row=0, column=1, padx=2, pady=2)
-        #Label(self.downloadProcessFrame,text="Download Process").grid(row=0,column=0)
+        self.downloadProcessTitleFrame = Frame(
+            self.downloadProcessFrame, height=20, width=194, bg='blue')
+        self.downloadProcessTitleFrame.grid_propagate(0)
+        self.downloadProcessTitleFrame.grid(
+            row=0, column=0, padx=0, pady=0, sticky=E, columnspan=2)
+        self.downloadProcessTitle = Label(
+            self.downloadProcessTitleFrame, text="Download Process",justify=LEFT)
+        self.downloadProcessTitle.grid_propagate(0)
+        self.downloadProcessTitleFrame.pack_propagate(0)
+        self.downloadProcessTitle.pack(fill='both', expand=1,anchor='w')
+        self.downloadBarFrame = Frame(
+            self.downloadProcessFrame, height=5, width=179,bg='white')
+        self.downloadBarFrame.grid_propagate(0)
+        self.downloadBarFrame.pack_propagate(0)
+        self.downloadBarFrame.grid(row=1, column=0, padx=0, pady=0,columnspan=2)
+        self.downloadBar=Frame(self.downloadBarFrame,height=5,width=0,bg="green")
+        self.downloadBar.pack_propagate(0)
+        self.downloadBar.pack(anchor=W)
+
+        self.downloadProcessScrollbar = Frame(
+            self.downloadProcessFrame, height=72, width=15)
+        self.downloadProcessScrollbar.grid_propagate(0)
+        self.downloadProcessScrollbar.pack_propagate(0)
+        self.downloadProcessScrollbar.grid(row=2, column=1, padx=0, pady=0)
+        bar = Scrollbar(self.downloadProcessScrollbar, orient=VERTICAL)
+        bar.pack(fill='both', expand=1)
+        self.downloadProcessTextFrame = Frame(
+            self.downloadProcessFrame, height=67, width=179)
+        self.downloadProcessTextFrame.grid_propagate(0)
+        self.downloadProcessTextFrame.pack_propagate(0)
+        self.downloadProcessTextFrame.grid(row=2, column=0, padx=0, pady=0)
+        self.downloadProcess = Text(
+            self.downloadProcessTextFrame, yscrollcommand=bar.set, state='disabled')
+        self.downloadProcess.pack(fill='both', expand=1)
 
     def search(self):
         print("search start")
@@ -296,8 +332,8 @@ class gui():
 
     def startDownload(self):
         self.downloadFlag = True
-        Label(self.downloadProcessFrame, text="Download Starts, Please Wait",
-              fg='red').grid(row=0, column=0)
+        # Label(self.downloadProcessFrame, text="Download Starts, Please Wait",
+        # fg='red').grid(row=0, column=0)
         self.root.quit()
 
     def downloadStart(self):
@@ -314,9 +350,21 @@ class gui():
         self.downloadFlag = False
         self.destroy()
 
-    #def updateDownloadStatus(self,message):
-        #Label(self.downloadProcessFrame,text=message).pack()
-        #self.root.quit()
+    def updateDownloadStatus(self, message):
+        self.downloadProcess.configure(state='normal')
+        self.downloadProcess.insert(INSERT, message+'\n')
+        self.downloadProcess.configure(state='disabled')
+        self.downloadProcess.see("end")
+        self.downloadNum+=1
+        self.downloadBar.config(width=int(
+            self.downloadBarFrame.winfo_width()*self.downloadNum/self.downloadTotal))
+        self.updateDownloadTitle("(%d/%d)"%(self.downloadNum,self.downloadTotal))
+        self.root.quit()
+
+    def updateDownloadTitle(self,message):
+        self.downloadProcessTitle.configure(text="Download Process "+message)
+        self.root.quit()
+
     def resetFlag(self):
         self.downloadFlag = False
         self.delFlag = False
@@ -336,13 +384,14 @@ class gui():
 
     def getFlag(self):
         self.root.mainloop()
-        return self.subFilFlag,self.altFlag,self.delFlag,self.downloadFlag,self.qFlag
+        return self.subFilFlag, self.altFlag, self.delFlag, self.downloadFlag, self.qFlag
 
     def getSubFilInfo(self):
-        return self.qual,self.subjectSearched.get()
+        return self.qual, self.subjectSearched.get()
 
     def getSubDetInfo(self):
-        year=(int(self.Syear), int(self.Eyear), False)
-        season=(self.mFlag.get(), self.sFlag.get(), self.wFlag.get())
-        category=(self.msFlag.get(), self.qpFlag.get(), self.inFlag.get(), self.gtFlag.get(), self.erFlag.get())
+        year = (int(self.Syear), int(self.Eyear), False)
+        season = (self.mFlag.get(), self.sFlag.get(), self.wFlag.get())
+        category = (self.msFlag.get(), self.qpFlag.get(),
+                    self.inFlag.get(), self.gtFlag.get(), self.erFlag.get())
         return self.subSelected.get(), year, season, category, self.paper.get()
